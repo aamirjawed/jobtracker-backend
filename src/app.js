@@ -1,7 +1,9 @@
 import dotenv from 'dotenv'
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import db from './db/db-connection.js'
 import authRoutes from './routes/authRoutes.js'
+import profileManageRoutes from './routes/profileManageRoutes.js'
 
 
 
@@ -22,8 +24,12 @@ app.use(express.urlencoded({
     limit:"16kb"
 }))
 
+app.use(cookieParser())
 
+// auth routes
 app.use('/api/v1/user', authRoutes)
+
+app.use('/api/v1/user', profileManageRoutes)
 
 db.sync().then(() => {
     app.listen(PORT, ()=>{

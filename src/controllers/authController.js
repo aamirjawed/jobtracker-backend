@@ -1,6 +1,7 @@
 
 import bcrypt, { hash } from 'bcryptjs'
 import User from '../models/userModel.js'
+import jwt from 'jsonwebtoken'
 
 
 
@@ -116,6 +117,18 @@ export const signinController = async(req, res) => {
             })
         }
 
+
+        
+
+        const token = jwt.sign({id:user.id}, process.env.JWT_SECRET_KEY)
+
+       res.cookie("token", token,{
+            httpOnly:true,
+            secure:false,
+            sameSite:'lax',
+            maxAge:24*60*60*1000
+       })
+
        res.status(200).json({
         success:true,
         message:`User with ${email} exist`,
@@ -126,6 +139,8 @@ export const signinController = async(req, res) => {
             phoneNumber:user.phoneNumber
         }
        })
+
+       
     } catch (error) {
         console.log("Error in sign in controller in auth controller", error.message)
         return res.status(500).json({
