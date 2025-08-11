@@ -6,7 +6,7 @@ import authUser from "../../middleware/authMiddleware.js";
 const router = express.Router()
 
 
-router.post('/manage-profile', authUser, profileManageController)
+router.put('/manage-profile', authUser, profileManageController)
 
 
 export default router

@@ -16,10 +16,14 @@ const User = sequelize.define('users', {
     },
     email:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique:true,
+        validate:{
+            isEmail:true
+        }
     },
     phoneNumber:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.STRING,
         allowNull:false
     },
     password:{
