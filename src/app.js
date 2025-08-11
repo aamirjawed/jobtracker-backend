@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import db from './db/db-connection.js'
+import authRoutes from './routes/authRoutes.js'
 
 
 
@@ -13,7 +14,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 
-
+app.use('/user', authRoutes)
 
 db.sync({force:true}).then(() => {
     app.listen(PORT, ()=>{
