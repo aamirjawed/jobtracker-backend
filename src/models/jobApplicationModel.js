@@ -35,6 +35,10 @@ const JobApplication = sequelize.define('jobApplication', {
     note:{
         type:DataTypes.STRING,
         allowNull:true
+    },
+    fileUrl:{
+        type:DataTypes.STRING,
+        allowNull:true
     }
 })
 

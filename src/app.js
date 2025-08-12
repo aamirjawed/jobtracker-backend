@@ -1,10 +1,11 @@
 import dotenv from 'dotenv'
-import express from 'express'
+import express, { application } from 'express'
 import cookieParser from 'cookie-parser'
 import db from './db/db-connection.js'
 import authRoutes from './routes/authRoutes.js'
 import profileManageRoutes from './routes/profileManageRoutes.js'
 import jobApplicationRoutes from './routes/jobApplicationRoutes.js'
+
 
 
 
@@ -33,7 +34,10 @@ app.use('/api/v1/user', authRoutes)
 // user manage profile routes 
 app.use('/api/v1/user', profileManageRoutes)
 
+// job application routes 
 app.use('/api/v1/user', jobApplicationRoutes )
+
+
 
 db.sync().then(() => {
     app.listen(PORT, ()=>{

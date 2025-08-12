@@ -1,4 +1,5 @@
 import JobApplication from "../models/jobApplicationModel.js"
+import {uploadOnCloudinary} from '../utils/cloudinary.js'
 
 export const newJobApplication = async (req, res) => {
     const {companyName, jobTitle, applicationDate, status, note}  = req.body
@@ -14,6 +15,15 @@ export const newJobApplication = async (req, res) => {
 
     try {
         const id = req.userId
+        let fileUrl = null
+
+        if(req.file){
+            const cloudinaryresponse = await uploadOnCloudinary(req.file.path)
+                if( cloudinaryresponse){
+                    fileUrl = cloudinaryresponse.secure_url
+                
+            }
+        }
 
         /* The code `const newApplication = JobApplication.create({...})` is creating a new job
         application entry in the database using the `JobApplication` model. It is assigning values
@@ -27,6 +37,7 @@ export const newJobApplication = async (req, res) => {
             applicationDate:applicationDate,
             status:status,
             note:note,
+            fileUrl:fileUrl,
             userId:id
         })
 
