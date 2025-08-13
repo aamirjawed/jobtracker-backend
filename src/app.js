@@ -5,6 +5,7 @@ import db from './db/db-connection.js'
 import authRoutes from './routes/authRoutes.js'
 import profileManageRoutes from './routes/profileManageRoutes.js'
 import jobApplicationRoutes from './routes/jobApplicationRoutes.js'
+import reminderRoutes from './routes/reminderRoutes.js'
 
 
 
@@ -36,6 +37,9 @@ app.use('/api/v1/user', profileManageRoutes)
 
 // job application routes 
 app.use('/api/v1/user', jobApplicationRoutes )
+
+// reminder routes
+app.use('/api/v1/user', reminderRoutes)
 
 
 

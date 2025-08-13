@@ -83,8 +83,8 @@ export const viewAllApplications = async (req, res) => {
         
         const applications = await JobApplication.findAll({
             where:{userId:id},
-            attributes:['companyName', 'jobTitle', 'status', 'applicationDate', 'note'],
-            order:['createdAt','DESC']
+            
+            order:[['createdAt','DESC']]
 
         })
         
@@ -100,6 +100,109 @@ export const viewAllApplications = async (req, res) => {
             success:false,
             error:"Internal server error",
             message:"Something went wrong"
+        })
+    }
+}
+
+
+export const getSpecificApplication  = async(req, res) => {
+    const id = req.userId
+    const applicationId = req.params.applicationId
+
+    try {
+        const application = await JobApplication.findOne({
+            where:{userId:id, id:applicationId}
+        })
+
+        if(!application){
+            return res.status(404).json({
+                success:false,
+                message:"Application not found"
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            message:"Application retrieved successfully",
+            data:application
+        })
+    } catch (error) {
+        console.log("Error in get specific application in job application controller", error.message)
+        console.log("Full error of get specific application", error)
+        return res.status(500).json({
+            success:false,
+            message:"Something went wrong while fetching the application"
+        })
+    }
+}
+
+
+export const updateApplication = async (req, res) => {
+    const id = req.userId;
+    const applicationId  = req.params.applicationId
+
+    try {
+        const application = await JobApplication.findOne({
+            where:{userId:id, id:applicationId}
+        })
+
+        if(!application){
+            return res.status(404).json({
+                success:false,
+                message:"Application not found or you don't have permission to update"
+            })
+        }
+
+        const updateData = {...req.body}
+
+
+        await application.update(updateData)
+
+        return res.status(200).json({
+            success:true,
+            message:"Application updated successfully",
+            data:application
+        })
+    } catch (error) {
+        console.log("Error in update application in job application controller", error.message)
+        console.log("Full error of update controller", error)
+        return res.status(500).json({
+            success:false,
+            message:"Something went wrong while updating the application"
+        })
+    }
+}
+
+
+export const deleteApplication  = async(req, res)=> {
+    const id = req.userId
+    const applicationId  = req.params.applicationId
+
+    try {
+        const application = await JobApplication.findOne({
+            where:{userId:id, id:applicationId}
+        })
+
+        if(!application){
+            return res.status(404).json({
+                success:false,
+                message:"Application not found or you don't have permission to delete"
+            })
+        }
+
+        await application.destroy()
+
+        return res.status(200).json({
+            success:true,
+            message:"Application deleted successfully",
+            data:application
+        })
+    } catch (error) {
+        console.log("Error in delete application in job application controller", error.message)
+        console.log("Full error in delete application", error)
+        return res.status(500).json({
+            success:false,
+            message:"Something went wrong while deleting"
         })
     }
 }

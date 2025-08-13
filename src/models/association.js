@@ -1,5 +1,6 @@
 import fileAttachment from "./fileAttachmentModel";
 import JobApplication from "./jobApplicationModel";
+import Reminder from "./reminderModel";
 import User from "./userModel";
 
 
@@ -14,4 +15,8 @@ JobApplication.hasMany(fileAttachment, {foreignKey:'jobApplicationId', onDelete:
 fileAttachment.belongsTo(JobApplication, {foreignKey:'jobApplicationId'})
 
 
-export default {User, JobApplication}
+User.hasMany(Reminder, {foreignKey:"userId", onDelete:"CASCADE"})
+Reminder.belongsTo(User, {foreignKey:"userId"})
+
+
+export default {User, JobApplication, Reminder}
