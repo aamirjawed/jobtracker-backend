@@ -6,6 +6,8 @@ import authRoutes from './routes/authRoutes.js'
 import profileManageRoutes from './routes/profileManageRoutes.js'
 import jobApplicationRoutes from './routes/jobApplicationRoutes.js'
 import reminderRoutes from './routes/reminderRoutes.js'
+import schedulerService from './service/schedulerService.js'
+import testEmailRoute from './routes/testEmailRoutes.js';
 
 
 
@@ -41,11 +43,15 @@ app.use('/api/v1/user', jobApplicationRoutes )
 // reminder routes
 app.use('/api/v1/user', reminderRoutes)
 
+app.use('/api/v1/test', testEmailRoute);
+
 
 
 db.sync().then(() => {
     app.listen(PORT, ()=>{
     console.log(`Server is running on: ${PORT}`)
+
+    schedulerService.start()
 })
 }).catch((err) => {
     console.log("Error in db sync in app js", err.message)

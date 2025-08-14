@@ -22,7 +22,7 @@ const Reminder = sequelize.define('reminder', {
         allowNull:false
     },
     reminderDate:{
-        type:DataTypes.DATE,
+        type:DataTypes.STRING,
         allowNull:false
     },
     reminderTime:{
@@ -30,7 +30,7 @@ const Reminder = sequelize.define('reminder', {
         allowNull:false
     },
     reminderStatus:{
-        type:DataTypes.ENUM("Pending", "Sent"),
+        type:DataTypes.ENUM("Pending", "Sent","Failed"),
         allowNull:false
     }
 })
