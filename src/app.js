@@ -8,6 +8,8 @@ import jobApplicationRoutes from './routes/jobApplicationRoutes.js'
 import reminderRoutes from './routes/reminderRoutes.js'
 import schedulerService from './service/schedulerService.js'
 import testEmailRoute from './routes/testEmailRoutes.js';
+import companyRoutes from './routes/companyRoutes.js'
+import jobListingRoutes from './routes/jobListingRoutes.js'
 
 
 
@@ -43,7 +45,14 @@ app.use('/api/v1/user', jobApplicationRoutes )
 // reminder routes
 app.use('/api/v1/user', reminderRoutes)
 
+// email test route
 app.use('/api/v1/test', testEmailRoute);
+
+// company routes
+app.use('/api/v1/', companyRoutes)
+
+// job listing routes
+app.use('/api/v1', jobListingRoutes)
 
 
 
